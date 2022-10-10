@@ -385,10 +385,10 @@ How does this relate to k-induction?
 
 *  The purpose of K-induction is to find inductive invariants, by strengthening the problem at hand:
 
-  * The problem is to reach island D to get the treasure.
+* The problem is to reach island D to get the treasure.
 
-  * For **the basecase**, we assert that if island_A and purple_box follows island B and if island_B and red_box follows island C. If they are proven to be correct in this step, then we check the inductive step.
+* For **the basecase**, we assert that if island_A and purple_box follows island B and if island_B and red_box follows island C. If they are proven to be correct in this step, then we check the inductive step.
 
-  * For the **inductive step**, we check that if island_C and turquoise box follows island_D and win. We *assume* the **basecase**, which lead us to only one path, which is the path we wanted to find. Then *we win*, because it does not matter from where the player starts, if the requisites are fulfilled, the player will end all the time reaching island D and wining. Also note that, since our property was strong enough, we rule out the initial path the player picked as starting point which led to losing the game (B to D using blue bridge).
+* For the **inductive step**, we check that if island_C and turquoise box follows island_D and win. We *assume* the **basecase**, which lead us to only one path, which is the path we wanted to find. Then *we win*, because it does not matter from where the player starts, if the requisites are fulfilled, the player will end all the time reaching island D and wining. Also note that, since our property was strong enough, we rule out the initial path the player picked as starting point which led to losing the game (B to D using blue bridge).
 
-  * This took no more than **2** steps to prove. Which means that a well defined inductive invariant does not need that many steps to be proven.
+* This took no more than **2** steps to prove. Which means that a well defined inductive invariant does not need that many steps to be proven.
