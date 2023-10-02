@@ -20,6 +20,8 @@ html_static_path = ['_static', 'media']
 pygments_style = 'colorful'
 highlight_language = 'systemverilog'
 
+numfig = True
+
 html_theme_options = {
     "sidebar_hide_name": True,
 

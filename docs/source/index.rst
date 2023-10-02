@@ -2,9 +2,9 @@
 YosysHQ SVA AXI Verification IP
 ===============================================
 
-========
 Abstract
 ========
+
 AXI4 is a well known bus protocol used extensively for FPGA and ASIC designs. At YosysHQ, we have developed an open source verification IP (VIP) to demonstrate the usefulness of such verification IP and as a showcase of how to develop formal verification IP.
 
 This AppNote will cover the following topics:
@@ -15,9 +15,9 @@ This AppNote will cover the following topics:
 
 Note that as these properties are written in SVA, they are not compatible with the OSS CAD suite. Please contact YosysHQ for an evaluation of the `Tabby CAD suite <https://www.yosyshq.com/tabby-cad-datasheet>`_.
 
-============
 Introduction
 ============
+
 Formal verification offers a way to prove exhaustively that your design is correct. It doesn’t rely on simulation, instead using solvers to prove assertions about your design.
 
 Verification IP offers the possibility to use 3rd party assertions rather than writing your own.
@@ -32,7 +32,6 @@ We prioritized:
 * Developed using properties optimized for model checking.
 * Open source to improve auditability and learning opportunities.
 
-============================
 AXI4 Formal VIP Architecture
 ============================
 
@@ -138,7 +137,7 @@ We designed the AXI4 SVA FVIP having in mind the fundamental architectural descr
 :numref:`Figure %s <org>` shows the architecture of the AXI4 SVA FVIP. For more information refer to the `UG_verification_plan, Section III.6: Architecture <https://github.com/YosysHQ-GmbH/SVA-AXI4-FVIP/raw/main/AXI4/doc/UG_verification_plan.pdf>`_.
 
 .. _org:
-.. figure:: ../img/org.png
+.. figure:: media/org.png
   :width: 70%
   :align: center
 
@@ -179,7 +178,6 @@ Then, in each channel that needs to honor this property, it is assembled as show
 
 The user can drag and drop the signals to the waveform, only the ones stated in the property, and look at the message and/or the package where this property is defined to start debugging. Sometimes, the message in the assertion is clear enough that there might be no need to look up the spec - but never trust code, it is recommended to confirm with the relevant reference.
 
-===================================================
 Formalisation and Optimisation of the AXI4 SVA FVIP
 ===================================================
 
@@ -221,7 +219,7 @@ Control properties are easy to describe in the AXI4 protocol, what is more trick
 The AMBA AXI4 IHI0022E depicts the channel dependencies with the following data flow diagram:
 
 .. _interdep:
-.. image:: ../img/interdep.png
+.. image:: media/interdep.png
   :width: 70%
   :align: center
 
@@ -256,7 +254,7 @@ The disadvantage of this approach is that the user should know beforehand the ma
 :numref:`Figure %s <scoreboard>` shows how the scoreboard works. As soon as AW handshake occurs, the value seen at AWID is stored. In this example, we store two AWIDs with values ``'h00`` and ``'hFF``. Once a pipeline packet has stored a transfer, we mark it as an active. When BVALID is asserted, the value presented at BID must match the value stored at the head of the pipeline data structure. If this is the case, the behavior is proven, otherwise a CEX is shown. Once a packet has been read, we mark it as invalid.
 
 .. _scoreboard:
-.. figure:: ../img/scoreboard.png
+.. figure:: media/scoreboard.png
   :width: 90%
   :align: center
 
@@ -267,9 +265,9 @@ The disadvantage of this approach is that the user should know beforehand the ma
   * There is an overflow check that is asserted when more write requests than pipeline packets exist. This can be disabled as well.
   * By looking at how many packets become active/inactive, we can see that we actually make progress during transaction verification, and that no check is vacuous.
 
-=======================
 Using the SVA AXI4 FVIP
 =======================
+
 The SVA AXI4 FVIP comes with some basic examples, we describe them in this section.
 
 --------------
@@ -317,7 +315,7 @@ For this example, we use `SpinalHDL <https://github.com/SpinalHDL/SpinalHDL>`_ t
 There are some protocol violations in this design. For example, the property ``ap_AR_STABLE_ARPROT`` is violated, as ``ARPROT`` can change its value when it has not been acknowledged (red shows the violation).
 
 .. _spinal_arprot:
-.. figure:: ../img/spinal_arprot.png
+.. figure:: media/spinal_arprot.png
   :width: 95%
   :align: center
 
@@ -331,7 +329,7 @@ AXI4 Crossbar
 We also provide an example of how to use the FVIP to test different configurations for crossbars/interconnects. In more complex designs where different topologies are involved, or even where different types of bridges and adaptors are required, but testing the entire system becomes very complex, the FVIP can be used to replace the upstream/downstream components to focus on one task at a time.  :numref:`Figure %s <arch_xbar>` shows a diagram of how the FVIP is connected to the crossbar.
 
 .. _arch_xbar:
-.. figure:: ../img/arch_xbar.png
+.. figure:: media/arch_xbar.png
   :width: 70%
   :align: center
 
@@ -340,7 +338,7 @@ We also provide an example of how to use the FVIP to test different configuratio
 There is a document that covers the setup and some results of this example in `AXI4/examples/axi_crossbar/doc/crossbar_example.pdf <https://github.com/YosysHQ-GmbH/SVA-AXI4-FVIP/raw/main/AXI4/examples/axi_crossbar/doc/crossbar_example.pdf>`_. One of the properties that failed is *Read burst crossing 4K address boundary*. The AXI4 Formal IP found a violation in the crossbar around time step 19, ``ARBURST = INCR``, ``ARLEN = 1Ch``, ``ARSIZE = 1h`` and ``ARADDR = 1EFE3h`` giving a final address of ``1F01Bh``, crossing the 4K boundary.
 
 .. _ar_bound_4k:
-.. figure:: ../img/ar_bound_4k.jpg
+.. figure:: media/ar_bound_4k.jpg
   :width: 95%
   :align: center
 
@@ -349,7 +347,6 @@ There is a document that covers the setup and some results of this example in `A
 .. note::
   The failing property was obtained in the inductive test and may not be valid, but it has a purpose. One usually can find interesting scenarios by weakening the inductive property (not adding all required constrains but with some guidance), because SBY cannot generate certificates of witness yet, so this can help to investigate the design further. This is not a recommendation, and many times it does not serve a purpose without having previous knowledge of certain weak structures of the design.
 
-============================
 Completeness of the Protocol
 ============================
 
@@ -367,7 +364,7 @@ We want to play a game in this map. The goal is to get the treasure (depicted as
 * The player can take up to 3 months traveling between islands, because they are very far from each other.
 
 .. _penup_20220416:
-.. figure:: ../img/penup_20220416.jpg
+.. figure:: media/penup_20220416.jpg
   :width: 70%
   :align: center
 
